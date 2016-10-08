@@ -1,0 +1,11 @@
+[
+    {
+        "button": "button1", 
+        "count": 2,
+        "press_command": "match_next",
+        "press_args": {
+            "command": "drag_select",
+            "args": {"by": "words"}
+        }
+    },
+]

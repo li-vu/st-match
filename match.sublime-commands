@@ -1,0 +1,83 @@
+[
+  {
+    "caption": "Match: Find ...",
+    "command": "match" 
+  },
+  {
+    "caption": "Match: Find current word",
+    "command": "match",
+    "args": {
+      "prompt": false
+    } 
+  },
+  {
+    "caption": "Match: Next",
+    "command": "match_next",
+    "args": {"forward": true}
+  },
+  {
+    "caption": "Match: Previous",
+    "command": "match_next",
+    "args": {"forward": false}
+  },
+  {
+    "caption": "Match: Show panel",
+    "command": "match_show_panel",
+  },
+  {
+    "caption": "Match: Use regex",
+    "command": "match_toggle_settings",
+    "args": {
+      "setting": "match_use_regex",
+      "value": true
+    }
+  },
+  {
+    "caption": "Match: No regex (default)",
+    "command": "match_toggle_settings",
+    "args": {
+      "setting": "match_use_regex",
+      "value": false
+    }
+  },
+  {
+    "caption": "Match: All open files",
+    "command": "match_toggle_settings",
+    "args": {
+      "setting": "match_search_in_all_open_files",
+      "value": true
+    }
+  },
+  {
+    "caption": "Match: Only this view (default)",
+    "command": "match_toggle_settings",
+    "args": {
+      "setting": "match_search_in_all_open_files",
+      "value": false
+    }
+  },
+  {
+    "caption": "Match: Case sensitive",
+    "command": "match_toggle_settings",
+    "args": {
+      "setting": "match_case_sensitive",
+      "value": true
+    }
+  },
+  {
+    "caption": "Match: Case insensitive (default)",
+    "command": "match_toggle_settings",
+    "args": {
+      "setting": "match_case_sensitive",
+      "value": false
+    }
+  },
+  {
+    "caption": "Match: Toggle embedded syntax",
+    "command": "match_toggle_settings",
+    "args": {
+      "setting": "match_embedded_syntax",
+      "toggle": true
+    }
+  }
+]

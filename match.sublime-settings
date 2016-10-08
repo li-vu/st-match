@@ -1,0 +1,14 @@
+{
+    "match_use_regex": false,
+    "match_case_sensitive": false,
+    // search in all open files (default only the active view)
+    "match_search_in_all_open_files": false,
+    // embedded the active view syntax highlight into the result view. 
+    // Only works when running in the active view.
+    "match_embedded_syntax": true,
+    // when searching all open files, shorten file names that are longer than 
+    // the threshold
+    "match_file_name_shortening_threshold": 32,
+    // font_size of the match view
+    "font_size": 9.5
+}

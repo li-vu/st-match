@@ -1,0 +1,67 @@
+[
+    {
+        "keys": ["ctrl+alt+f"],
+        "command": "match"
+    },
+    {
+        "keys": ["f8"],
+        "command": "match",
+        "args": {"prompt": false}
+    },
+    {
+        "keys": ["ctrl+alt+m"],
+        "command": "match",
+        "args": {"prompt": false}
+    },
+    {
+        "keys": ["alt+f12"],
+        "command": "match_definition",
+    },
+    {
+        "keys": ["n"],
+        "command": "match_next",
+        "args": {"forward": true},
+        "context":  [{"key": "selector", "operator": "equal", "operand": "source.match"}]
+    },
+    {
+        "keys": ["p"],
+        "args": {"forward": false},
+        "command": "match_next",
+        "context":  [{"key": "selector", "operator": "equal", "operand": "source.match"}]
+    },
+    {
+        "keys": ["down"],
+        "command": "match_next",
+        "args": {"forward": true},
+        "context":  [{"key": "selector", "operator": "equal", "operand": "source.match"}]
+    },
+    {
+        "keys": ["up"],
+        "args": {"forward": false},
+        "command": "match_next",
+        "context":  [{"key": "selector", "operator": "equal", "operand": "source.match"}]
+    },
+    {
+        "keys": ["enter"],
+        "command": "match_next",
+        "context":  [{"key": "selector", "operator": "equal", "operand": "source.match"}]
+    },
+    {
+        "keys": ["up"], "command": "match_history",
+        "args": {
+            "backwards": true
+        },
+        "context":
+        [
+            { "key": "setting.match_input_panel", "operator": "equal", "operand": true }
+        ]
+    },
+
+    {
+        "keys": ["down"], "command": "match_history",
+        "context":
+        [
+            { "key": "setting.match_input_panel", "operator": "equal", "operand": true }
+        ]
+    }
+]

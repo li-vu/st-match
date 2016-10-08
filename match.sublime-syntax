@@ -1,0 +1,17 @@
+%YAML1.2
+---
+# A syntax file with embedded target language will be automatically generated 
+# after search. This syntax file servers as contingency.
+name: match
+hidden: true
+scope: source.match
+contexts:
+  main:
+    - match: '^(([\w\\/_\-\d. ]*):)?(\d+): (?=.*)'
+      captures:
+        2: string.quoted.double.match,
+        3: constant.numeric.match
+      # push: 'Packages/XML/XML.sublime-syntax'
+      # with_prototype:
+      #   - match: $
+      #     pop: true
