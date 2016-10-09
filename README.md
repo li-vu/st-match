@@ -4,6 +4,8 @@ Find all matches of a given pattern in a given view(s) in Sublime Text, similar 
 
 This package is inspired by Emacs' `occur-mode` and [Sean Gilbertson's](https://github.com/dreki/sublime-occur) port to Sublime Text.
 
+Find the package useful? [Say thanks by buying me a beer](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=V2WZKXYV27338).
+
 # Install
 
 The package can be installed using one of the following methods:
