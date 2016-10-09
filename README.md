@@ -42,3 +42,8 @@ The package can be installed using one of the following methods:
 - `match_file_name_shortening_threshold`: when searching all open files, shorten file names that are longer than the threshold (default: 32 characters).
 
 # License
+Copyright (C) 2016 [li-vu](https://github.com/li-vu)
+
+This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation. <http://www.gnu.org/licenses/gpl.html>
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
