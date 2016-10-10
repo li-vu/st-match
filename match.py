@@ -21,7 +21,6 @@ def remove_storage(wid):
     del match_storages[wid]
 
 class MatchHistory:
-  """Match History - inspired by https://github.com/randy3k/AlignTab/"""
   hist = []
   index = None
 
