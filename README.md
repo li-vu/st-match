@@ -25,6 +25,8 @@ The package can be installed using one of the following methods:
     1. Find matches of the current word under the cursor by pressing `F8`, or
     2. Bring up an input panel by the command `Match: Find ...`
 
+![prompt](prompt.png)
+
 - Once the search finishes, an output panel will list the matches and their line numbers.
 
 - Use `up` and `down` to move between the matches in the output panel. As an match is selected, the view will move to its location, and the match will be underlined in the view.
