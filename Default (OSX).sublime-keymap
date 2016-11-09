@@ -1,9 +1,5 @@
 [
     {
-        "keys": ["super+ctrl+f"],
-        "command": "match"
-    },
-    {
         "keys": ["f8"],
         "command": "match",
         "args": {"prompt": false}
