@@ -393,17 +393,11 @@ class MatchNextCommand(sublime_plugin.TextCommand):
     window = self.view.window()
     panel = window.find_output_panel(match_panel_name)
     if not panel or self.view.id() != panel.id():
-      # default behaviors
-      system_command = kwargs["command"] if "command" in kwargs else None
-      if system_command:
-        system_args = dict({"event": kwargs["event"]}.items())
-        system_args.update(dict(kwargs["args"].items()))
-        self.view.run_command(system_command, system_args)
       return
+      
     # our stuff
     if window.active_panel() != match_panel_name:
       window.run_command('show_panel', { 'panel': 'output.' + match_panel_name })
-
     caret = panel.sel()[0].begin()
     (r, c) = panel.rowcol(caret)
     if "forward" in kwargs:
