@@ -50,7 +50,7 @@ class MatchHistory:
 
   def reset_index(self):
       self.index = None
-__init_variable('default_syntax_file', lambda: "match/match.sublime-syntax")
+__init_variable('default_syntax_file', lambda: "Match/match.sublime-syntax")
 __init_variable('match_panel_name', lambda: "match_st3_output")
 __init_variable('match_highlight', lambda: "match_highlight")
 __init_variable('match_history', lambda: MatchHistory())
