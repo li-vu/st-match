@@ -5,7 +5,7 @@
         "args": {"prompt": false}
     },
     {
-        "keys": ["ctrl+alt+m"],
+        "keys": ["ctrl+alt+super+m"],
         "command": "match",
         "args": {"prompt": false}
     },
