@@ -283,7 +283,7 @@ class MatchSearchCommand(sublime_plugin.WindowCommand):
         os.makedirs(default_package_path)
     m = re.match(r'Packages/\w+/(\w+)\..+', view_syntax)
     view_lang = m.groups()[0] if m else re.sub(r'[^\w_]+',"_", view_syntax)
-    syntax = "User/match_{0}.sublime-syntax".format(view_lang.lower())
+    syntax = "User/match_syntaxes/match_{0}.sublime-syntax".format(view_lang.lower())
     return syntax, os.path.join(sublime.packages_path(), syntax)
 
   def __write_syntax(self, view_syntax):
@@ -292,6 +292,12 @@ class MatchSearchCommand(sublime_plugin.WindowCommand):
     _, syntax_file = self.__get_match_syntax(view_syntax)
     if not syntax_file or os.path.isfile(syntax_file):
         return
+    if not os.path.exists(os.path.dirname(syntax_file)):
+        try:
+            os.makedirs(os.path.dirname(syntax_file))
+        except OSError as exc: # Guard against race condition
+            if exc.errno != errno.EEXIST:
+                raise
     with open(syntax_file, 'w') as f:
       str = """%YAML1.2
 ---
