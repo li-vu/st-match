@@ -1,7 +1,7 @@
 import sublime
 import sublime_plugin
 import functools
-import os, shutil
+import os, shutil, re
 from traceback import print_exc
 
 def __init_variable(v, value):
@@ -106,7 +106,7 @@ class Match:
     view.sel().clear()
     view.sel().add_all(self.regions)
     # view.show(self.regions[0].begin())
-    
+
   def __call__(self):
     view = self.view
     if not view:
@@ -266,14 +266,6 @@ class MatchSearchCommand(sublime_plugin.WindowCommand):
     super(MatchSearchCommand, self).__init__(*args, **kwargs)
     self.__load_settings()
 
-  def __del__(self, *args, **kwargs):
-    window = self.window
-    remove_storage(window.id())
-    syntax_file = self.embedded_syntax_file_path
-    print("Deleting: ", syntax_file)
-    if os.path.exists(syntax_file):
-      os.unlink(syntax_file)
-
   def __load_settings(self):
     self.settings = sublime.load_settings('match.sublime-settings')
     self.use_regex = self.settings.get('match_use_regex', False)
@@ -282,20 +274,23 @@ class MatchSearchCommand(sublime_plugin.WindowCommand):
     self.max_file_name = self.settings.get('match_file_name_shortening_threshold', None)
     self.embedded_syntax = self.settings.get('match_embedded_syntax', True)
     self.font_size = self.settings.get('font_size', None)
-    self.embedded_syntax_file = "Default/match_{0}.sublime-syntax".format(self.window.id())
-    self.embedded_syntax_file_path = os.path.join(sublime.packages_path(), self.embedded_syntax_file)
 
-  def __embedded_syntax_exists(self):
-    return os.path.exists(self.embedded_syntax_file_path)
-
-  def __write_syntax(self, view_syntax):
-    default_package_path = os.path.join(sublime.packages_path(), "Default")
+  def __get_match_syntax(self, view_syntax):
+    if not view_syntax:
+        return None, None
+    default_package_path = os.path.join(sublime.packages_path(), "User")
     if not os.path.exists(default_package_path):
         os.makedirs(default_package_path)
-    syntax_file = self.embedded_syntax_file_path
-    if os.path.isfile(syntax_file):
-        os.unlink(syntax_file)
+    m = re.match(r'Packages/\w+/(\w+)\..+', view_syntax)
+    view_lang = m.groups()[0] if m else re.sub(r'[^\w_]+',"_", view_syntax)
+    syntax = "User/match_{0}.sublime-syntax".format(view_lang.lower())
+    return syntax, os.path.join(sublime.packages_path(), syntax)
+
+  def __write_syntax(self, view_syntax):
     if not view_syntax:
+        return
+    _, syntax_file = self.__get_match_syntax(view_syntax)
+    if not syntax_file or os.path.isfile(syntax_file):
         return
     with open(syntax_file, 'w') as f:
       str = """%YAML1.2
@@ -327,7 +322,7 @@ contexts:
     if not views:
       return
     syntax = self.window.active_view().settings().get('syntax') if self.embedded_syntax and not self.all_views else None
-    self.__write_syntax(syntax)    
+    self.__write_syntax(syntax)
 
     storage = get_storage(self.window.id())
     storage.clear()
@@ -338,7 +333,7 @@ contexts:
     if not font_size or not isinstance(font_size, int):
       font_size = views[0].settings().get('font_size',10)
     panel.settings().set('font_size', font_size)
-    self.__append(panel, text)
+    self.__append(panel, text, syntax)
     rs = panel.find_all(pattern, self.__search_flags(definition))
     panel.add_regions(match_highlight, rs, "string", "", sublime.PERSISTENT | sublime.DRAW_SOLID_UNDERLINE | sublime.DRAW_NO_FILL | sublime.DRAW_NO_OUTLINE)
     panel.sel().clear()
@@ -369,11 +364,12 @@ contexts:
     symbols = view.symbols()
     return [r for (r, t) in symbols if pattern == t]
 
-  def __append(self, view, text):
+  def __append(self, view, text, syntax):
     try:
+      syntax, syntax_file = self.__get_match_syntax(syntax)
       global default_syntax_file
-      syntax_file = "Packages/{0}".format(self.embedded_syntax_file if self.__embedded_syntax_exists() else default_syntax_file)
-      view.set_syntax_file(syntax_file)
+      syntax_file_rel = "Packages/{0}".format(syntax if syntax and os.path.exists(syntax_file) else default_syntax_file)
+      view.set_syntax_file(syntax_file_rel)
     except:
       print("__append:Error: ",print_exc())
     view.set_read_only(False)
@@ -394,7 +390,7 @@ class MatchNextCommand(sublime_plugin.TextCommand):
     panel = window.find_output_panel(match_panel_name)
     if not panel or self.view.id() != panel.id():
       return
-      
+
     # our stuff
     if window.active_panel() != match_panel_name:
       window.run_command('show_panel', { 'panel': 'output.' + match_panel_name })
@@ -439,7 +435,7 @@ class MatchHideRegions(sublime_plugin.EventListener):
       return
     caret = panel.sel()[0].begin()
     (r, c) = panel.rowcol(caret)
-    
+
     storage = get_storage(window.id())
     if not storage:
       return
